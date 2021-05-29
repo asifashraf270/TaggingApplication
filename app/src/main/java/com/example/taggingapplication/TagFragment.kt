@@ -52,6 +52,14 @@ class TagFragment : Fragment(), View.OnClickListener {
             LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         adapter = TagsAdapter(requireContext())
         recyclerView.adapter = adapter
+
+
+        return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter.onClickListener = this
         Dexter.withActivity(activity).withPermissions(
             android.Manifest.permission.READ_EXTERNAL_STORAGE,
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -65,44 +73,38 @@ class TagFragment : Fragment(), View.OnClickListener {
 
             override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
                 if (report!!.areAllPermissionsGranted()) {
-                    initViews(view)
+                    tagsManager = AppUtils.getTagsManager(requireContext())
+
+                    var file = File(Environment.getExternalStorageDirectory().path, "/CustomPhotoAlbum/")
+                    if (!file.exists()) {
+                        file.mkdirs()
+                    }
+
+                    if (tagsManager == null || tagsManager?.list?.size == 0) {
+                        list.clear()
+                        sharedPreferences.edit().putBoolean(AppConstants.NOTAG, true).commit()
+                        AppLogger.errorLog(TAG, "tagsManager is Null create Object")
+                        var file = File(Environment.getExternalStorageDirectory().path, "/CustomPhotoAlbum/")
+                        if (!file.exists()) {
+                            file.mkdirs()
+                        }
+
+                        var photoList: MutableList<PhotosList> = AppUtils.getPhotosFromDirectory()
+
+                        var model: TagsPhotoDetail =
+                            TagsPhotoDetail("No Tags in Photo", "", photoList.size, photoList)
+                        list.add(model)
+                        adapter.updateList(list)
+
+                    } else {
+                        sharedPreferences.edit().putBoolean(AppConstants.NOTAG, false).commit()
+                        adapter.updateList(tagsManager?.list!!)
+                    }
+
                 } else {
                 }
             }
         }).check()
-
-        return view
-    }
-
-    override fun onResume() {
-        super.onResume()
-        tagsManager = AppUtils.getTagsManager(requireContext())
-        adapter.onClickListener = this
-        var file = File(Environment.getExternalStorageDirectory().path, "/CustomPhotoAlbum/")
-        if (!file.exists()) {
-            file.mkdirs()
-        }
-
-        if (tagsManager == null || tagsManager?.list?.size == 0) {
-            list.clear()
-            sharedPreferences.edit().putBoolean(AppConstants.NOTAG, true).commit()
-            AppLogger.errorLog(TAG, "tagsManager is Null create Object")
-            var file = File(Environment.getExternalStorageDirectory().path, "/CustomPhotoAlbum/")
-            if (!file.exists()) {
-                file.mkdirs()
-            }
-
-            var photoList: MutableList<PhotosList> = AppUtils.getPhotosFromDirectory()
-
-            var model: TagsPhotoDetail =
-                TagsPhotoDetail("No Tags in Photo", "", photoList.size, photoList)
-            list.add(model)
-            adapter.updateList(list)
-
-        } else {
-            sharedPreferences.edit().putBoolean(AppConstants.NOTAG, false).commit()
-            adapter.updateList(tagsManager?.list!!)
-        }
 
     }
 
