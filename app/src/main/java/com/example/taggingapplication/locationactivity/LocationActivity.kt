@@ -12,11 +12,9 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
 import com.example.taggingapplication.R
 import com.example.taggingapplication.utilities.AppConstants
-import com.example.taggingapplication.utilities.AppUtils
+import com.example.taggingapplication.utilities.CustomPhotoAlbum
 
 class LocationActivity : AppCompatActivity() {
     lateinit var sharedPreferences: SharedPreferences
@@ -28,7 +26,7 @@ class LocationActivity : AppCompatActivity() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.window?.setLayout(
-            AppUtils.getWidth(this) - 30,
+            CustomPhotoAlbum.getWidth(this) - 30,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
         dialog.setCancelable(false)

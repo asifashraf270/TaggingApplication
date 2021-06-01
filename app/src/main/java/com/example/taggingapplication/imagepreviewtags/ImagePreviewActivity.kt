@@ -22,12 +22,11 @@ import com.example.taggingapplication.imagepreviewtags.tags.AddNewTagAdapter
 import com.example.taggingapplication.imagepreviewtags.tags.TagsListAdapter
 import com.example.taggingapplication.locationactivity.LocationActivity
 import com.example.taggingapplication.managers.PhotosList
-import com.example.taggingapplication.managers.TagsManager
-import com.example.taggingapplication.managers.TagsPhotoDetail
+import com.example.taggingapplication.managers.AssetInfo
 import com.example.taggingapplication.models.TagsModel
 import com.example.taggingapplication.utilities.AppConstants
 import com.example.taggingapplication.utilities.AppLogger
-import com.example.taggingapplication.utilities.AppUtils
+import com.example.taggingapplication.utilities.CustomPhotoAlbum
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
@@ -82,7 +81,7 @@ class ImagePreviewActivity : AppCompatActivity(), View.OnClickListener {
             R.id.button -> {
                 if (sharedPreferences.getBoolean(AppConstants.ISLOCATIONSAVED, false)) {
                     tagsList.clear()
-                    var tagsManager = AppUtils.getTagsManager(this)
+                    var tagsManager = CustomPhotoAlbum.getTagsManager(this)
                     if (tagsManager?.list?.size!! > 0) {
                         for (i in 0 until tagsManager.list.size) {
                             tagsList.add(
@@ -103,14 +102,14 @@ class ImagePreviewActivity : AppCompatActivity(), View.OnClickListener {
             R.id.rootView -> {
                 var tagsName = v.tag as String
                 AppLogger.errorLog(TAG, "got click listener " + tagsName)
-                var tagsManager = AppUtils.getTagsManager(this)
+                var tagsManager = CustomPhotoAlbum.getTagsManager(this)
                 for (i in 0 until tagsManager?.list?.size!!) {
                     if (tagsManager.list.get(i).tagName.equals(tagsName)) {
                         var list = tagsManager.list.get(i).photosList
                         list.add(PhotosList(getCurrentOpenImage()))
                     }
                 }
-                AppUtils.storeTagsManagerObject(this, tagsManager)
+                CustomPhotoAlbum.storeTagsManagerObject(this, tagsManager)
             }
         }
     }
@@ -184,7 +183,7 @@ class ImagePreviewActivity : AppCompatActivity(), View.OnClickListener {
             var image = photosList.get(currentIndex).imageUri
             AppLogger.errorLog(TAG, image.toString())
 
-            var tagsManager = AppUtils.getTagsManager(this)
+            var tagsManager = CustomPhotoAlbum.getTagsManager(this)
 
             for (i in 0 until adapter.list.size) {
                 if (tagsManager?.list?.size!! > 0) {
@@ -196,7 +195,7 @@ class ImagePreviewActivity : AppCompatActivity(), View.OnClickListener {
                             } else {
                                 var photoList = mutableListOf<PhotosList>()
                                 photoList.add(PhotosList(this.photosList.get(currentPosition).imageUri))
-                                var model = TagsPhotoDetail(
+                                var model = AssetInfo(
                                     adapter.list.get(i).tagName,
                                     photosList.get(currentIndex).imageUri,
                                     0,
@@ -210,7 +209,7 @@ class ImagePreviewActivity : AppCompatActivity(), View.OnClickListener {
                     if (adapter.list.get(i).isAdd) {
                         var photoList = mutableListOf<PhotosList>()
                         photoList.add(PhotosList(this.photosList.get(currentPosition).imageUri))
-                        var model = TagsPhotoDetail(
+                        var model = AssetInfo(
                             adapter.list.get(i).tagName,
                             photosList.get(currentPosition).imageUri,
                             0,
@@ -223,7 +222,7 @@ class ImagePreviewActivity : AppCompatActivity(), View.OnClickListener {
 
             }
             AppLogger.errorLog(TAG, tagsManager.toString() + ".....Tags manager")
-            AppUtils.storeTagsManagerObject(this, tagsManager)
+            CustomPhotoAlbum.storeTagsManagerObject(this, tagsManager)
             bottomRecyclerView()
             dialog.dismiss()
         })
@@ -234,7 +233,7 @@ class ImagePreviewActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     fun bottomRecyclerView() {
-        var tagsManager = AppUtils.getTagsManager(this)
+        var tagsManager = CustomPhotoAlbum.getTagsManager(this)
         var adapter = TagsListAdapter(this, tagsManager?.list!!)
         tagsRecyclerView.layoutManager =
             LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)

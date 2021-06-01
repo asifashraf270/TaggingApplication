@@ -8,12 +8,12 @@ import android.util.Log
 import android.view.WindowManager
 import com.example.taggingapplication.managers.PhotosList
 import com.example.taggingapplication.managers.TagsManager
-import com.example.taggingapplication.managers.TagsPhotoDetail
+import com.example.taggingapplication.managers.AssetInfo
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import java.io.File
 
-class AppUtils {
+class CustomPhotoAlbum {
     companion object {
         fun storeTagsManagerObject(context: Context, tagsManager: TagsManager?) {
             var sharedPreferences: SharedPreferences =
@@ -27,7 +27,7 @@ class AppUtils {
             var sharedPreferences: SharedPreferences =
                 context.getSharedPreferences(AppConstants.PREF_NAME, 0)
             var gson = GsonBuilder().create()
-            var list = mutableListOf<TagsPhotoDetail>()
+            var list = mutableListOf<AssetInfo>()
             var tagsManager = TagsManager(list)
             if (sharedPreferences.getString(AppConstants.TAGS_lIST, "").isNullOrEmpty()) {
                 return tagsManager

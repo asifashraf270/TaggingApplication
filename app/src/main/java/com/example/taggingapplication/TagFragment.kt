@@ -8,34 +8,29 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taggingapplication.managers.PhotosList
 import com.example.taggingapplication.managers.TagsManager
-import com.example.taggingapplication.managers.TagsPhotoDetail
+import com.example.taggingapplication.managers.AssetInfo
 import com.example.taggingapplication.photos.PhotosActivity
 import com.example.taggingapplication.utilities.AppConstants
 import com.example.taggingapplication.utilities.AppLogger
-import com.example.taggingapplication.utilities.AppUtils
+import com.example.taggingapplication.utilities.CustomPhotoAlbum
 import com.google.gson.Gson
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-import com.karumi.dexter.listener.single.PermissionListener
 import java.io.File
-import java.util.jar.Manifest
 
 private const val TAG = "TagFragment"
 
 class TagFragment : Fragment(), View.OnClickListener {
     lateinit var recyclerView: RecyclerView
     lateinit var adapter: TagsAdapter
-    var list = mutableListOf<TagsPhotoDetail>()
+    var list = mutableListOf<AssetInfo>()
     var gson = Gson()
     var tagsManager: TagsManager? = null
     lateinit var sharedPreferences: SharedPreferences
@@ -73,7 +68,7 @@ class TagFragment : Fragment(), View.OnClickListener {
 
             override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
                 if (report!!.areAllPermissionsGranted()) {
-                    tagsManager = AppUtils.getTagsManager(requireContext())
+                    tagsManager = CustomPhotoAlbum.getTagsManager(requireContext())
 
                     var file = File(Environment.getExternalStorageDirectory().path, "/CustomPhotoAlbum/")
                     if (!file.exists()) {
@@ -89,10 +84,10 @@ class TagFragment : Fragment(), View.OnClickListener {
                             file.mkdirs()
                         }
 
-                        var photoList: MutableList<PhotosList> = AppUtils.getPhotosFromDirectory()
+                        var photoList: MutableList<PhotosList> = CustomPhotoAlbum.getPhotosFromDirectory()
 
-                        var model: TagsPhotoDetail =
-                            TagsPhotoDetail("No Tags in Photo", "", photoList.size, photoList)
+                        var model: AssetInfo =
+                            AssetInfo("No Tags in Photo", "", photoList.size, photoList)
                         list.add(model)
                         adapter.updateList(list)
 

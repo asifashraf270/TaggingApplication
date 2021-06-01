@@ -13,7 +13,7 @@ import com.example.taggingapplication.managers.PhotosList
 import com.example.taggingapplication.managers.TagsManager
 import com.example.taggingapplication.utilities.AppConstants
 import com.example.taggingapplication.utilities.AppLogger
-import com.example.taggingapplication.utilities.AppUtils
+import com.example.taggingapplication.utilities.CustomPhotoAlbum
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -48,7 +48,7 @@ class PhotosActivity : AppCompatActivity(), View.OnClickListener {
         AppLogger.errorLog(TAG, defaultImage.toString() + "....default image uri")
         isNoTag = sharedPreferences.getBoolean(AppConstants.NOTAG, false)
         if (!isNoTag) {
-            tags = AppUtils.getTagsManager(this)
+            tags = CustomPhotoAlbum.getTagsManager(this)
             tagPosition = intent.getIntExtra(AppConstants.TAGGINGPOSITION, -1)
         }
 
@@ -72,7 +72,7 @@ class PhotosActivity : AppCompatActivity(), View.OnClickListener {
                 } else {
                     adapter.defaultImage = photosList.get(position).imageUri
                     tags?.list?.get(tagPosition)?.defaultImageUri = photosList.get(position).imageUri
-                    AppUtils.storeTagsManagerObject(this,tags)
+                    CustomPhotoAlbum.storeTagsManagerObject(this,tags)
                     adapter.notifyDataSetChanged()
                 }
 

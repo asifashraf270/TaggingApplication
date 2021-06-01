@@ -10,20 +10,20 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.taggingapplication.managers.TagsPhotoDetail
+import com.example.taggingapplication.managers.AssetInfo
 import com.example.taggingapplication.utilities.AppLogger
 
 private const val TAG = "TagsAdapter"
 
 class TagsAdapter(var context: Context) : RecyclerView.Adapter<TagsAdapter.TagsViewHolder>() {
-    var list: MutableList<TagsPhotoDetail>
+    var list: MutableList<AssetInfo>
     lateinit var onClickListener: View.OnClickListener
 
     init {
         list = mutableListOf()
     }
 
-    fun updateList(updatedList: List<TagsPhotoDetail>) {
+    fun updateList(updatedList: List<AssetInfo>) {
         this.list.clear()
         this.list.addAll(updatedList)
         AppLogger.errorLog(TAG, list.size.toString() + " list size")

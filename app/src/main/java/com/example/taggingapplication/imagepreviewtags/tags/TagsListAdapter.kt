@@ -8,10 +8,9 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taggingapplication.R
-import com.example.taggingapplication.managers.TagsPhotoDetail
-import com.example.taggingapplication.models.TagsModel
+import com.example.taggingapplication.managers.AssetInfo
 
-class TagsListAdapter(context: Context, var list: List<TagsPhotoDetail>) :
+class TagsListAdapter(context: Context, var list: List<AssetInfo>) :
     RecyclerView.Adapter<TagsListAdapter.TagsListViewHolder>() {
     lateinit var onClickListener: View.OnClickListener
 
