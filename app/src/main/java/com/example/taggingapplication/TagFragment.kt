@@ -70,7 +70,7 @@ class TagFragment : Fragment(), View.OnClickListener {
                 if (report!!.areAllPermissionsGranted()) {
                     tagsManager = CustomPhotoAlbum.getTagsManager(requireContext())
 
-                    var file = File(Environment.getExternalStorageDirectory().path, "/CustomPhotoAlbum/")
+                        var file = File(Environment.getExternalStorageDirectory().path, "/CustomPhotoAlbum/")
                     if (!file.exists()) {
                         file.mkdirs()
                     }
