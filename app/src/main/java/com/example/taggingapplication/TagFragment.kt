@@ -3,7 +3,6 @@ package com.example.taggingapplication
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Environment
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +22,6 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-import java.io.File
 
 private const val TAG = "TagFragment"
 
@@ -68,23 +66,18 @@ class TagFragment : Fragment(), View.OnClickListener {
 
             override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
                 if (report!!.areAllPermissionsGranted()) {
-                    tagsManager = CustomPhotoAlbum.getTagsManager(requireContext())
+                    tagsManager = CustomPhotoAlbum.getAlbum(requireContext())
 
-                        var file = File(Environment.getExternalStorageDirectory().path, "/CustomPhotoAlbum/")
-                    if (!file.exists()) {
-                        file.mkdirs()
-                    }
+                    CustomPhotoAlbum.createAlbum()
 
                     if (tagsManager == null || tagsManager?.list?.size == 0) {
                         list.clear()
                         sharedPreferences.edit().putBoolean(AppConstants.NOTAG, true).commit()
                         AppLogger.errorLog(TAG, "tagsManager is Null create Object")
-                        var file = File(Environment.getExternalStorageDirectory().path, "/CustomPhotoAlbum/")
-                        if (!file.exists()) {
-                            file.mkdirs()
-                        }
 
-                        var photoList: MutableList<PhotosList> = CustomPhotoAlbum.getPhotosFromDirectory()
+
+                        var photoList: MutableList<PhotosList> =
+                            CustomPhotoAlbum.getPhotosFromDirectory()
 
                         var model: AssetInfo =
                             AssetInfo("No Tags in Photo", "", photoList.size, photoList)
@@ -130,7 +123,7 @@ class TagFragment : Fragment(), View.OnClickListener {
                 } else {
                     AppLogger.errorLog(
                         TAG,
-                        tagsManager?.list?.get(pos)?.photosList?.size!!  .toString()+"....size"
+                        tagsManager?.list?.get(pos)?.photosList?.size!!.toString() + "....size"
                     )
                     intent.putExtra(
                         AppConstants.PHOTOLIST,

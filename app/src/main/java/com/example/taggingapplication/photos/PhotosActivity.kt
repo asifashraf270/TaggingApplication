@@ -48,7 +48,7 @@ class PhotosActivity : AppCompatActivity(), View.OnClickListener {
         AppLogger.errorLog(TAG, defaultImage.toString() + "....default image uri")
         isNoTag = sharedPreferences.getBoolean(AppConstants.NOTAG, false)
         if (!isNoTag) {
-            tags = CustomPhotoAlbum.getTagsManager(this)
+            tags = CustomPhotoAlbum.getAlbum(this)
             tagPosition = intent.getIntExtra(AppConstants.TAGGINGPOSITION, -1)
         }
 
@@ -72,7 +72,7 @@ class PhotosActivity : AppCompatActivity(), View.OnClickListener {
                 } else {
                     adapter.defaultImage = photosList.get(position).imageUri
                     tags?.list?.get(tagPosition)?.defaultImageUri = photosList.get(position).imageUri
-                    CustomPhotoAlbum.storeTagsManagerObject(this,tags)
+                    CustomPhotoAlbum.saveAlbum(this,tags)
                     adapter.notifyDataSetChanged()
                 }
 

@@ -14,8 +14,16 @@ import com.google.gson.GsonBuilder
 import java.io.File
 
 class CustomPhotoAlbum {
+
     companion object {
-        fun storeTagsManagerObject(context: Context, tagsManager: TagsManager?) {
+        var fileName="CustomPhotoAlbum"
+        fun createAlbum(){
+            var file = File(Environment.getExternalStorageDirectory().path, "/CustomPhotoAlbum/")
+            if (!file.exists()) {
+                file.mkdirs()
+            }
+        }
+        fun saveAlbum(context: Context, tagsManager: TagsManager?) {
             var sharedPreferences: SharedPreferences =
                 context.getSharedPreferences(AppConstants.PREF_NAME, 0)
             var gson = Gson()
@@ -23,7 +31,7 @@ class CustomPhotoAlbum {
                 .commit()
         }
 
-        fun getTagsManager(context: Context): TagsManager? {
+        fun getAlbum(context: Context): TagsManager? {
             var sharedPreferences: SharedPreferences =
                 context.getSharedPreferences(AppConstants.PREF_NAME, 0)
             var gson = GsonBuilder().create()
