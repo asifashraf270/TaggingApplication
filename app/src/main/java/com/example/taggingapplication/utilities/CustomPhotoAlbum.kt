@@ -16,13 +16,14 @@ import java.io.File
 class CustomPhotoAlbum {
 
     companion object {
-        var fileName="CustomPhotoAlbum"
-        fun createAlbum(){
+        var fileName = "CustomPhotoAlbum"
+        fun createAlbum() {
             var file = File(Environment.getExternalStorageDirectory().path, "/CustomPhotoAlbum/")
             if (!file.exists()) {
                 file.mkdirs()
             }
         }
+
         fun saveAlbum(context: Context, tagsManager: TagsManager?) {
             var sharedPreferences: SharedPreferences =
                 context.getSharedPreferences(AppConstants.PREF_NAME, 0)
@@ -46,6 +47,7 @@ class CustomPhotoAlbum {
             )
             return tagsManager
         }
+        //this function will return all Photos From CustomPhotoAlbum class
 
         fun getPhotosFromDirectory(): MutableList<PhotosList> {
             val path: String =
