@@ -49,21 +49,7 @@ class CustomPhotoAlbum {
         }
         //this function will return all Photos From CustomPhotoAlbum class
 
-        fun getPhotosFromDirectory(): MutableList<PhotosList> {
-            val path: String =
-                Environment.getExternalStorageDirectory().toString()
-                    .toString() + "/CustomPhotoAlbum"
-            Log.d("Files", "Path: $path")
-            val directory = File(path)
-            val files: Array<File> = directory.listFiles()
-            Log.d("Files", "Size: " + files.size)
-            var list = mutableListOf<PhotosList>()
-            for (i in files.indices) {
-                list.add(PhotosList(files[i].path))
-                Log.d("Files", "FileName:" + files[i].getName())
-            }
-            return list
-        }
+
 
         fun getWidth(context: Context): Int {
             val displayMetrics = DisplayMetrics()

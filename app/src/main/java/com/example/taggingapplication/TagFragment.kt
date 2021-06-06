@@ -15,6 +15,7 @@ import com.example.taggingapplication.managers.AssetInfo
 import com.example.taggingapplication.photos.PhotosActivity
 import com.example.taggingapplication.utilities.AppConstants
 import com.example.taggingapplication.utilities.AppLogger
+import com.example.taggingapplication.utilities.CachePhotoManager
 import com.example.taggingapplication.utilities.CustomPhotoAlbum
 import com.google.gson.Gson
 import com.karumi.dexter.Dexter
@@ -77,7 +78,7 @@ class TagFragment : Fragment(), View.OnClickListener {
 
 
                         var photoList: MutableList<PhotosList> =
-                            CustomPhotoAlbum.getPhotosFromDirectory()
+                            CachePhotoManager.fetchImages()
 
                         var model: AssetInfo =
                             AssetInfo("No Tags in Photo", "", photoList.size, photoList)
