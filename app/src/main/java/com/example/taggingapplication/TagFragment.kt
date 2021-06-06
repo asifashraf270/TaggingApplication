@@ -70,7 +70,6 @@ class TagFragment : Fragment(), View.OnClickListener {
                     tagsManager = CustomPhotoAlbum.getAlbum(requireContext())
 
                     CustomPhotoAlbum.createAlbum()
-
                     if (tagsManager == null || tagsManager?.list?.size == 0) {
                         list.clear()
                         sharedPreferences.edit().putBoolean(AppConstants.NOTAG, true).commit()

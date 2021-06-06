@@ -33,5 +33,6 @@ class CachePhotoManager {
             var tagsManager=CustomPhotoAlbum.getAlbum(context)
             return tagsManager?.list?.size!!
         }
+
     }
 }
