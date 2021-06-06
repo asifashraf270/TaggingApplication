@@ -25,6 +25,7 @@ class CustomPhotoAlbum {
         }
 
         fun saveAlbum(context: Context, tagsManager: TagsManager?) {
+            //this will save tags into SharedPreference
             var sharedPreferences: SharedPreferences =
                 context.getSharedPreferences(AppConstants.PREF_NAME, 0)
             var gson = Gson()
@@ -33,6 +34,8 @@ class CustomPhotoAlbum {
         }
 
         fun getAlbum(context: Context): TagsManager? {
+            //this will return All tags saved in SharedPreference
+
             var sharedPreferences: SharedPreferences =
                 context.getSharedPreferences(AppConstants.PREF_NAME, 0)
             var gson = GsonBuilder().create()
@@ -48,7 +51,6 @@ class CustomPhotoAlbum {
             return tagsManager
         }
         //this function will return all Photos From CustomPhotoAlbum class
-
 
 
         fun getWidth(context: Context): Int {
