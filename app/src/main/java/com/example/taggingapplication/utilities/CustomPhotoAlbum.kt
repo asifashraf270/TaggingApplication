@@ -18,6 +18,7 @@ class CustomPhotoAlbum {
     companion object {
         var fileName = "CustomPhotoAlbum"
         fun createAlbum() {
+            //this will create a folder into Local Storage if No tag Present This will call from TagFragment
             var file = File(Environment.getExternalStorageDirectory().path, "/CustomPhotoAlbum/")
             if (!file.exists()) {
                 file.mkdirs()
@@ -50,10 +51,9 @@ class CustomPhotoAlbum {
             )
             return tagsManager
         }
-        //this function will return all Photos From CustomPhotoAlbum class
-
 
         fun getWidth(context: Context): Int {
+            //this will return Width of Device I used this for Showing Dialog
             val displayMetrics = DisplayMetrics()
             val windowmanager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
             windowmanager.defaultDisplay.getMetrics(displayMetrics)

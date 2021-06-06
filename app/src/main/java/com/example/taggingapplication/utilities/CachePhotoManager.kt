@@ -13,6 +13,7 @@ import java.io.File
 class CachePhotoManager {
     companion object{
         fun fetchImages(): MutableList<PhotosList> {
+            //this function will return All Images present in customphotoAlbum folder of local storage
             val path: String =
                 Environment.getExternalStorageDirectory().toString()
                     .toString() + "/CustomPhotoAlbum"
@@ -28,6 +29,7 @@ class CachePhotoManager {
             return list
         }
         fun assetWidth(context: Context):Int{
+            //this function will return tags List isze
             var tagsManager=CustomPhotoAlbum.getAlbum(context)
             return tagsManager?.list?.size!!
         }
